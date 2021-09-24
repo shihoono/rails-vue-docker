@@ -1,19 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <button @click="handleLogout()">Logout</button>
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
+import { logout } from '@/api/auth'
+import router from '@/router'
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    HelloWorld
+  setup () {
+    const handleLogout = () => {
+      logout().then(() => {
+        router.push('/about')
+      })
+    }
+    return {
+      handleLogout
+    }
   }
 })
-console.log(process.env.VUE_APP_API_BASE)
 </script>
