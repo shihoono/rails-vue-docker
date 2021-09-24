@@ -15,4 +15,5 @@ export default defineComponent({
     HelloWorld
   }
 })
+console.log(process.env.VUE_APP_API_BASE)
 </script>
