@@ -35,33 +35,34 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs } from 'vue'
-  import { login } from '@/api/auth'
+import { defineComponent, reactive, toRefs } from 'vue'
+import { login } from '@/api/auth'
+import router from '@/router'
 
-  export default defineComponent({
-    name: 'Home',
-    setup() {
-      const formData = reactive({
-        email: '',
-        password: ''
-      })
+export default defineComponent({
+  name: 'Home',
+  setup () {
+    const formData = reactive({
+      email: '',
+      password: ''
+    })
 
-      return {
-        ...toRefs(formData),
-        handleLogin: async () => {
-          await login(formData.email, formData.password)
-            .then((res) => {
-              if (res?.status === 200) {
-                console.log(res)
-              } else {
-                alert('メールアドレスかパスワードが間違っています。')
-              }
-            })
-            .catch(() => {
-              alert('ログインに失敗しました。')
-            })
-        }
+    return {
+      ...toRefs(formData),
+      handleLogin: async () => {
+        await login(formData.email, formData.password)
+          .then((res) => {
+            if (res?.status === 200) {
+              router.push('/posts')
+            } else {
+              alert('メールアドレスかパスワードが間違っています。')
+            }
+          })
+          .catch(() => {
+            alert('ログインに失敗しました。')
+          })
       }
     }
-  })
+  }
+})
 </script>
