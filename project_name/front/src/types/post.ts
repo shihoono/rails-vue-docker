@@ -3,6 +3,5 @@ export type Post = {
   body: string;
   userName: string;
   createdAt: string;
+  icatchUrl: string;
 }
-
-export type PostForRequest = Pick<Post, 'title' | 'body'>

@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.eager_load(:user).with_attached_icatch
   end
 
   # GET /posts/1
@@ -43,6 +43,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.permit(:title, :body).merge(user: current_user)
+      params.permit(:title, :body, :icatch).merge(user: current_user)
     end
 end

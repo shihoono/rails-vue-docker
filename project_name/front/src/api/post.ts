@@ -1,25 +1,33 @@
 import Client from '@/api/client'
-import { Post, PostForRequest } from '@/types/post'
+import { Post } from '@/types/post'
 import {
-  getAuthDataFromStorage
+  getAuthDataFromStorage,
+  getAuthDataFromStorageWithFormData
 } from '@/utils/auth-data'
 import { AxiosResponse } from 'axios'
 
 export const getPosts = async () => {
   return await Client.get('/posts', { headers: getAuthDataFromStorage() })
-    .then((res: AxiosResponse<Post[]>) => {
-      return res.data
+    .then((response) => {
+      return response.data
     })
     .catch((err) => {
-      return err.response
+      console.log(err)
     })
 }
 
-export const createPost = async (formData: PostForRequest) => {
+export const getPost = async (id: string) => {
+  return await Client.get(`/posts/${id}`, { headers: getAuthDataFromStorage })
+    .then((response) => {
+      return response.data
+    })
+}
+
+export const createPost = async (formData: FormData) => {
   return await Client.post(
     '/posts', formData,
     {
-      headers: getAuthDataFromStorage()
+      headers: getAuthDataFromStorageWithFormData()
     }
   )
     .then((res: AxiosResponse<Post>) => {
