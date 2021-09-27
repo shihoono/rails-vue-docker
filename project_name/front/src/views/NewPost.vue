@@ -30,8 +30,8 @@ export default defineComponent({
 
     const handleCreatePost = async () => {
       await createPost(postData)
-        .then((res) => {
-          console.log(res)
+        .then(() => {
+          router.push('/posts')
         })
     }
 
