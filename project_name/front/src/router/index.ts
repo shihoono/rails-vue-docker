@@ -3,6 +3,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import NewPost from '@/views/NewPost.vue'
 import Post from '@/views/Post.vue'
+import { authorizeToken } from './authGuard'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -13,17 +14,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: { requiresNotAuth: true }
   },
   {
     path: '/posts',
     name: 'Post',
-    component: Post
+    component: Post,
+    meta: { requiresAuth: true }
   },
   {
     path: '/posts/new',
     name: 'NewPost',
-    component: NewPost
+    component: NewPost,
+    meta: { requiresAuth: true }
   },
   {
     path: '/about',
@@ -39,5 +43,6 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+router.beforeEach(authorizeToken)
 
 export default router
